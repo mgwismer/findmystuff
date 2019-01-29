@@ -108,3 +108,9 @@ export function fetchHouse(path) {
         }
     });
 }
+
+export function fetchRoom(room) {
+    return new Promise((resolve, reject) => {
+
+    });
+}
