@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { fetchHouse } from '../utils/house-server';
+import  Room from './room';
 
 export default class RoomChoiceList extends Component {
 
@@ -19,26 +20,26 @@ export default class RoomChoiceList extends Component {
 
   render() {
     const { roomNames } = this.state;
-    console.log('choice list', roomNames);
-    const roomItems = roomNames.map((roomName, index) => (
-        <div>
-          {roomName}
+    const roomsInHouse = roomNames.map((roomName, index) => (
+        <Room
+          roomName={roomName}
+          key={index}
+        >
           <br/>
-        </div>
+        </Room>
       )
-    )
-    console.log('room items', roomItems);
+    );
+  
     return (
       <div className="App">
-        <div className="App-header">
-          <h2 onClick={this.handleRoomsButtonClick}>Welcome to Find My Stuff</h2>
-        </div>
+        <button className="App-header">
+          <h2 onClick={this.handleRoomsButtonClick}>Welcome to Find My Stuff (click here)</h2>
+        </button>
         <p className="App-intro">
-          NUMBER OF ROOMS
+          Then click on rooms
           <br/>
-          {roomNames.length}
         </p>
-        {roomItems}
+        {roomsInHouse}
         </div>
     );
   }

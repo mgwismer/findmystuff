@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import RoomChoiceList from './room-choice-list';
+import '../assets/styles/App.css';
+import '../assets/styles/index.css';
 
 export default class App extends Component {
 
@@ -13,7 +15,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App-header">
         <RoomChoiceList
         />
       </div>
