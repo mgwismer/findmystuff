@@ -127,9 +127,20 @@ export function findSubArea(roomName, subAreaName) {
     });
 }
 
-export function findPlaceWithObject(item, path) {
+export function findPlaceWithObject(itemSearch, path) {
     return new Promise((resolve, reject) => {
         const rooms = theHouse[path];
-        const area = rooms.filter(room => room.subAreas.filter(subArea => ))
+        const roomSuccess = rooms.filter(room => !!room.subAreas.filter(subArea => !!subArea.itemsFound.filter(itemFound => itemFound === itemSearch).length).length)
+        if (roomSuccess) {
+            const areaSuccess = roomSuccess[0].subAreas.filter(subArea => !!subArea.itemsFound.filter(itemFound => itemFound === itemSearch).length);
+            resolve({
+                roomName: roomSuccess[0].roomName,
+                subAreaName: areaSuccess[0].subAreaName
+            });
+        } else {
+            reject({
+                message: `not found`
+            });
+        }
     });
 }
