@@ -131,7 +131,7 @@ export function findPlaceWithObject(itemSearch, path) {
     return new Promise((resolve, reject) => {
         const rooms = theHouse[path];
         const roomSuccess = rooms.filter(room => !!room.subAreas.filter(subArea => !!subArea.itemsFound.filter(itemFound => itemFound === itemSearch).length).length)
-        if (roomSuccess) {
+        if (!!roomSuccess) {
             const areaSuccess = roomSuccess[0].subAreas.filter(subArea => !!subArea.itemsFound.filter(itemFound => itemFound === itemSearch).length);
             resolve({
                 roomName: roomSuccess[0].roomName,
