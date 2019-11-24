@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { fetchRoom } from '../utils/house-server';
 import SubArea from './room-sub-area';
 
 export default class Room extends Component {
@@ -12,19 +11,12 @@ export default class Room extends Component {
     });
   }
 
-  handleRoomButtonClick = (event) => {
+  handleRoomButtonClick = async (event) => {
     event.stopPropagation();
-    const { roomName } = this.props;
-    const { roomSections } = this.state;
-    let roomSectionsFromServer = [];
-    if (roomSections && roomSections.length) {
-      this.setState({ roomSections: [] });
-    } else {
-      fetchRoom(roomName).then(subAreas => {
-        roomSectionsFromServer = subAreas.map(area => area.subAreaName);
-        this.setState({ roomSections: roomSectionsFromServer });
+    const { subAreas } = this.props;
+    this.setState({
+      roomSections: subAreas,
     });
-  }
 }
 
   render() {
