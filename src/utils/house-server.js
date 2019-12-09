@@ -108,7 +108,6 @@ export function fetchRoom(roomName) {
                 message: 'not found.'
             });
         }
-
     });
 }
 
