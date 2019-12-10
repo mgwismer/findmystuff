@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { findPlaceWithObject } from '../utils/house-server';
+import { findPlaceWithObject } from '../../utils/house-server';
 import SearchResults from './search-results';
 
 export default class SearchInput extends Component {  
