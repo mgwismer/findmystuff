@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { fetchHouse } from '../utils/house-server';
 import  Room from './room';
 import firebase from './firebase';
+import { fetchRoomData } from '../api-utils/fetchData';
 
 export default class RoomChoiceList extends Component {
 
@@ -12,24 +13,26 @@ export default class RoomChoiceList extends Component {
 
   componentDidMount = async () => {
     const snapshot = await firebase.firestore().collection('thedomicile').get();
-    const practice = await firebase.firestore().collection('thedomicile').doc('kitchen').collection('stair closet').get();
+    const totalData = await fetchRoomData();
 
     let roomsInHouse = [];
-    snapshot.forEach(doc => {
-      const id = doc.id;
-      const data = doc.data();
-      const roomName = data.name;
-      const roomSubAreas = data.subAreas;
-      roomsInHouse.push(data.name);
-      const { subAreas } = this.state;
-      this.setState({
-        subAreas: {
-          ...subAreas,
-          [roomName]: roomSubAreas, 
-        }
-      })
-    });
+    // snapshot.forEach(doc => {
+    //   console.log('doc in room', doc.data());
+    //   const id = doc.id;
+    //   const data = doc.data();
+    //   const roomName = data.name;
+    //   const roomSubAreas = data.subAreas;
+    //   roomsInHouse.push(data.name);
+    //   const { subAreas } = this.state;
+    //   this.setState({
+    //     subAreas: {
+    //       ...subAreas,
+    //       [roomName]: roomSubAreas, 
+    //     }
+    //   })
+    // });
     this.setState({ roomsInHouse })
+    console.log('total data', totalData);
   }
 
   handleRoomsButtonClick = () => {

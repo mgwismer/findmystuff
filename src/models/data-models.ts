@@ -3,13 +3,13 @@ export type RoomType = {
     subAreas: Array<string>;
 };
 
-export type subAreaType = {
+export type SubAreaType = {
     name: string;
     room: string;
     items: Array<string>;
 };
 
-export type itemType = {
+export type ItemType = {
     name: string;
     subArea: string;
     room: string;
@@ -17,6 +17,6 @@ export type itemType = {
 
 export type NormalizedHouseData = {
     rooms: Array<RoomType>;
-    subAreas: Array<subAreaType>;
-    items: Array<itemType>;
+    subAreas: Array<SubAreaType>;
+    items: Array<ItemType>;
 }

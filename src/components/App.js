@@ -11,7 +11,6 @@ export default class App extends Component {
   unsubscribeFromAuth = null;
   componentDidMount = async () => {
     this.unsubscribeAuth = auth.onAuthStateChanged(user => {
-      console.log('this user', user);
       this.setState({ user });
     })
   }
