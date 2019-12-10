@@ -12,10 +12,11 @@ export default class RoomChoiceList extends Component {
 
   componentDidMount = async () => {
     const snapshot = await firebase.firestore().collection('thedomicile').get();
-    const practice = await firebase.firestore().collection('thedomicile').doc('kitchen').collection('stair closet').get();
-
+    // const practice = await firebase.firestore().collection('thedomicile').doc('kitchen').collection('stair closet').get();
+    console.log('component did mount', snapshot)
     let roomsInHouse = [];
     snapshot.forEach(doc => {
+      console.log('doc data', doc.data());
       const id = doc.id;
       const data = doc.data();
       const roomName = data.name;
@@ -34,6 +35,7 @@ export default class RoomChoiceList extends Component {
 
   handleRoomsButtonClick = () => {
     const { roomsInHouse: roomNames, toggle } = this.state;
+    console.log('state', this.state);
     if (!toggle) {
       this.setState({ roomNames, toggle: true });
     } else {
