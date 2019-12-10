@@ -1,15 +1,13 @@
 import React from 'react';
-import SignInAndSignUp from './SignInAndSignUp';
-import RoomChoiceList from './room-choice-list';
-import SearchInput from './search-input';
+import SignInAndSignUp from './SignIn/SignInAndSignUp';
+import SearchAndList from './SearchAndList';
 
 const Authentication = ({ user, loading }) => {
   if (loading) return null;
 
   const signin = user ? 
     <div>
-        <RoomChoiceList />
-        <SearchInput />
+        <SearchAndList />
     </div> : <SignInAndSignUp />
   return signin;
 };
