@@ -2,7 +2,7 @@ import { NormalizedHouseData, RoomType, SubAreaType, ItemType } from "../models/
 import firebase from "firebase";
 
 export const fetchRoomData = async () => {
-    const snapshot = await firebase.firestore().collection('thedomocile').get();
+    const snapshot = await firebase.firestore().collection('thedomicile').get();
     console.log('api', snapshot);
     snapshot.forEach(doc => {
         console.log('for each api', doc.data());
@@ -30,7 +30,6 @@ export function normalizeRoomData(snapshot: any): RoomType[] {
             name: data.name,
             subAreas: data.subAreas,
         };
-        console.log('before room push', room, data);
         rooms.push(room);
     });
     return rooms;

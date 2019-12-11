@@ -12,26 +12,26 @@ export default class RoomChoiceList extends Component {
   }
 
   componentDidMount = async () => {
-    const snapshot = await firebase.firestore().collection('thedomicile').get();
+    // const snapshot = await firebase.firestore().collection('thedomicile').get();
     const totalData = await fetchRoomData();
-    console.log('mount', snapshot);
+    // console.log('mount', snapshot);
     let roomsInHouse = [];
-    snapshot.forEach(doc => {
-      console.log('for each mount', doc.data());
-      const id = doc.id;
-      const data = doc.data();
-      const roomName = data.name;
-      const roomSubAreas = data.subAreas;
-      roomsInHouse.push(data.name);
-      const { subAreas } = this.state;
-      this.setState({
-        subAreas: {
-          ...subAreas,
-          [roomName]: roomSubAreas, 
-        }
-      })
-    });
-    this.setState({ roomsInHouse })
+    // snapshot.forEach(doc => {
+    //   console.log('for each mount', doc.data());
+    //   const id = doc.id;
+    //   const data = doc.data();
+    //   const roomName = data.name;
+    //   const roomSubAreas = data.subAreas;
+    //   roomsInHouse.push(data.name);
+    //   const { subAreas } = this.state;
+    //   this.setState({
+    //     subAreas: {
+    //       ...subAreas,
+    //       [roomName]: roomSubAreas, 
+    //     }
+    //   })
+    // });
+    // this.setState({ roomsInHouse })
     console.log('total data', totalData);
   }
 
