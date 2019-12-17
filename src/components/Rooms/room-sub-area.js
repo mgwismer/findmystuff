@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { findSubArea } from '../utils/house-server';
+import { findSubArea } from '../../utils/house-server';
 
 export default class SubArea extends Component {
 

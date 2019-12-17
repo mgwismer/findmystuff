@@ -1,12 +1,9 @@
-import { NormalizedHouseData, RoomType, SubAreaType, ItemType } from "../models/data-models";
+import { RoomType, SubAreaType, ItemType } from "../models/data-models";
 import firebase from "firebase";
 
 export const fetchRoomData = async () => {
     const snapshot = await firebase.firestore().collection('thedomicile').get();
-    console.log('api', snapshot);
-    snapshot.forEach(doc => {
-        console.log('for each api', doc.data());
-    })
+
     const rooms = normalizeRoomData(snapshot);
 
     const subAreas = await fetchSubAreaData(rooms);
@@ -22,10 +19,8 @@ export const fetchRoomData = async () => {
 
 export function normalizeRoomData(snapshot: any): RoomType[] {
     let rooms: RoomType[] = [];
-    console.log('snapshot in', snapshot);
     snapshot.forEach((doc: { data: () => { name: string, subAreas: Array<string> }}) => {
         const data = doc.data();
-        console.log('snaphot data', data);
         const room = {
             name: data.name,
             subAreas: data.subAreas,
@@ -38,33 +33,37 @@ export function normalizeRoomData(snapshot: any): RoomType[] {
 export const fetchSubAreaData = async (rooms: RoomType[]) => {
     let subAreas: SubAreaType[] = [];
 
-    await rooms.forEach(room => {
-        room.subAreas.forEach(subArea => {
-            firebase.firestore().collection('thedomocile').doc(room.name).get().then(snapshot => {
+    for (const room of rooms) {
+        const roomSubAreas = room.subAreas;
+        for (const subArea of roomSubAreas) {
+            const snapshot = await firebase.firestore().collection('thedomicile').doc(room.name).collection(subArea).get();
+                let items: string[] = []
+                snapshot.forEach(doc => {
+                    items = doc.data()['items found'];
+                });
                 const subAreaEntry = {
                     name: subArea,
                     room: room.name,
-                    items: [],
+                    items,
                 }
                 subAreas.push(subAreaEntry);
-            });
-        })
-    })
-    return subAreas;
+            };
+    };
+    return Promise.resolve(subAreas);
 }
 
 export const fetchItemData = (subAreas: SubAreaType[]) => {
     let items: ItemType[] = [];
+
     subAreas.forEach(area => {
-        console.log('area found', area);
-        // area.items.forEach(item => {
-        //     const itemEntry = {
-        //         name: item.name,
-        //         subArea: area.name,
-        //         room: area.room,
-        //     };
-        //     items.push(itemEntry);
-        // })
+        area.items.forEach(item => {
+            const itemEntry = {
+                name: item,
+                subArea: area.name,
+                room: area.room,
+            };
+            items.push(itemEntry);
+        })
     })
     return items;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
-import SignInAndSignUp from './SignInAndSignUp';
-import RoomChoiceList from './room-choice-list';
-import SearchInput from './search-input';
+import SignInAndSignUp from './SignIn/SignInAndSignUp';
+import RoomChoiceList from './Rooms/room-choice-list';
+import SearchInput from './Search/search-input';
 
 const Authentication = ({ user, loading }) => {
   if (loading) return null;
