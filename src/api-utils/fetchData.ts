@@ -13,7 +13,7 @@ export const fetchRoomData = async () => {
     return {
         rooms,
         subAreas,
-        items
+        items,
     }
 }
 
@@ -31,7 +31,7 @@ export function normalizeRoomData(snapshot: any): RoomType[] {
 }
 
 export const fetchSubAreaData = async (rooms: RoomType[]) => {
-    let subAreas: SubAreaType[] = [];
+    let subAreas: Record<string, SubAreaType> = {};
 
     for (const room of rooms) {
         const roomSubAreas = room.subAreas;
@@ -46,23 +46,23 @@ export const fetchSubAreaData = async (rooms: RoomType[]) => {
                     room: room.name,
                     items,
                 }
-                subAreas.push(subAreaEntry);
+                subAreas[subArea] = subAreaEntry;
             };
     };
     return Promise.resolve(subAreas);
 }
 
-export const fetchItemData = (subAreas: SubAreaType[]) => {
-    let items: ItemType[] = [];
-
-    subAreas.forEach(area => {
+export const fetchItemData = (subAreas: Record<string, SubAreaType>) => {
+    let items: Record<string, ItemType> = {};
+    const subAreasArray = Object.values(subAreas);
+    subAreasArray.forEach(area => {
         area.items.forEach(item => {
             const itemEntry = {
                 name: item,
                 subArea: area.name,
                 room: area.room,
             };
-            items.push(itemEntry);
+            items[item] = itemEntry;
         })
     })
     return items;

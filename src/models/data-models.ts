@@ -17,6 +17,6 @@ export type ItemType = {
 
 export type NormalizedHouseData = {
     rooms: Array<RoomType>;
-    subAreas: Array<SubAreaType>;
-    items: Array<ItemType>;
+    subAreas: Record<string, SubAreaType>;
+    items: Record<string, ItemType>;
 }

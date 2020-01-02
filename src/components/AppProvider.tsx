@@ -8,8 +8,8 @@ export type AppProviderProps = {
 export const AppProvider: React.FunctionComponent<AppProviderProps> = () => {
     const context = {
         rooms: [],
-        subAreas: [],
-        items: [],
+        subAreas: {},
+        items: {},
     };
 
     return <appContext.Provider value={context} />
