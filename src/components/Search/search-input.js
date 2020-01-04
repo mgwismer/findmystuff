@@ -14,12 +14,12 @@ export default class SearchInput extends Component {
     
     handleSearchTermSubmit = () => {
         const { searchTerm } = this.state;
-        findPlaceWithObject(searchTerm, 'rooms').then(place => {
-            console.log(place)
-            this.setState({
-              foundRoom: place.roomName,
-              foundArea: place.subAreaName,
-            })
+        const { suggestionList: items } = this.props;
+        console.log('items', items, searchTerm, items[searchTerm])
+        
+        this.setState({
+          foundRoom: items[searchTerm] ? items[searchTerm].room : '',
+          foundArea: items[searchTerm] ? items[searchTerm].subAreaName : '',
         });
     }
 
