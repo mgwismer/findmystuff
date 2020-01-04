@@ -19,7 +19,7 @@ export default class SearchInput extends Component {
         
         this.setState({
           foundRoom: items[searchTerm] ? items[searchTerm].room : '',
-          foundArea: items[searchTerm] ? items[searchTerm].subAreaName : '',
+          foundArea: items[searchTerm] ? items[searchTerm].subArea : '',
         });
     }
 
@@ -35,10 +35,15 @@ export default class SearchInput extends Component {
                 Enter name: <input type="text" value={searchTerm} onChange={this.handleSearchTermChange} placeholder="Search"/>
                 <input type="submit" value="Submit" onClick={this.handleSearchTermSubmit}/>
                 {this.state.foundRoom && 
-                <div>
-                    {this.state.foundRoom}
-                    {this.state.foundArea}
-                </div>}
+                  <div>
+                    <div>
+                        {this.state.foundRoom}
+                    </div>
+                    <br/>
+                    <div>
+                        {this.state.foundArea}
+                    </div>
+                  </div>}
             </div>
         );
     }

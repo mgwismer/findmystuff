@@ -12,17 +12,17 @@ export default class SubArea extends Component {
 
   handleSubAreaButtonClick = (event) => {
     event.stopPropagation();
-    const { roomName, subAreaName } = this.props;
-    findSubArea(roomName, subAreaName).then(subArea => {
-        this.setState({ stuff: subArea.itemsFound });
-        console.log('returned subArea', subArea, subArea.itemsFound);
-    });
+    const { items, subAreaName } = this.props;
+    const itemArray = Object.values(items).filter(item => item.subArea === subAreaName).map(item => item.name);
+
+    this.setState({
+      stuff: itemArray,
+    })
 };
 
   render() {
     const { subAreaName } = this.props;
     const { stuff } = this.state;
-    console.log('render in subarea', stuff);
     const stuffComponent = stuff.map(item => 
         <div className='section-stuff'>
             {item}

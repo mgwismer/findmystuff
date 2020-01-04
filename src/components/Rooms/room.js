@@ -6,33 +6,32 @@ export default class Room extends Component {
   constructor(props) {
     super(props);
     this.state = ({ 
-        items: [],
-        subAreas: [],
+        items: {},
+        subAreas: {},
         roomSubAreas: [],
     });
   }
 
   handleRoomButtonClick = (event) => {
-    console.log('room click', event, this.props)
     event.stopPropagation();
-    const { roomSubAreas, subAreas } = this.props;
+    const { roomSubAreas, subAreas, items } = this.props;
     this.setState({
       roomSubAreas,
       subAreas,
+      items,
     });
 }
 
   render() {
-    const { roomName } = this.props;
-    const { roomSubAreas, subAreas } = this.state;
+    const { roomName, items } = this.props;
+    const { roomSubAreas } = this.state;
     const roomSectionsComponent = roomSubAreas.map((subArea, index) => 
       <SubArea 
         subAreaName={subArea}
-        subAreas={subAreas}
+        items={items}
         key={index}
       />
     )
-  
     return (
       <div className="room-header"
         onClick={this.handleRoomButtonClick}>

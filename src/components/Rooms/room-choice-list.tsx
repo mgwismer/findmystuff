@@ -30,15 +30,15 @@ export const RoomChoiceList: React.FunctionComponent<OwnProps> = ({ totalHouse }
       }
     };
 
-    const { rooms, subAreas } = houseState;
+    const { rooms, subAreas, items } = houseState;
     const roomsInHouseComponent = rooms.map((room, index) => {
-      // const subAreasInRoom = subAreas.filter(subArea => subArea.room === room.name);
       return (
         <Room
           roomName={room.name}
           key={index}
           roomSubAreas={room.subAreas}
           subAreas={subAreas}
+          items={items}
         >
           <br/>
         </Room> 
