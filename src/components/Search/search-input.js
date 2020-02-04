@@ -1,50 +1,72 @@
 import React, { Component } from 'react';
 import { findPlaceWithObject } from '../../utils/house-server';
 import SearchResults from './search-results';
+import Select from 'react-select';
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    borderBottom: '1px dotted pink',
+    color: state.isSelected ? 'red' : 'blue',
+    padding: 10,
+    width: 200,
+  }),
+  menu: styles => ({
+    width: 200,
+    backgroundColor: 'ivory',
+  }),
+  control: styles => ({
+    ...styles,
+    // none of react-select's styles are passed to <Control />
+    backgroundColor: 'ivory',
+    width: 200,
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = 'opacity 300ms';
 
+    return { ...provided, opacity, transition };
+  }
+}
 export default class SearchInput extends Component {  
     constructor(props) {
         super(props);
         this.state = ({ 
-          searchTerm: '',
+          options: [],
+          searchTerm: {},
           foundRoom: '',
           foundArea: '',
         });
       }
-    
-    handleSearchTermSubmit = () => {
-        const { searchTerm } = this.state;
+
+    handleSearchTermSubmit = (e) => {
         const { suggestionList: items } = this.props;
-        console.log('items', items, searchTerm, items[searchTerm])
+        const { searchTerm } = this.state;
+        console.log('select items', e.key, e.value, searchTerm.value)
         
         this.setState({
-          foundRoom: items[searchTerm] ? items[searchTerm].room : '',
-          foundArea: items[searchTerm] ? items[searchTerm].subArea : '',
+          foundRoom: searchTerm.value && items[searchTerm.value] ? items[searchTerm.value].room : '',
+          foundArea: searchTerm.value && items[searchTerm.value] ? items[searchTerm.value].subArea : '',
         });
     }
 
-    handleSearchTermChange = (event) => {
-        const searchTerm = event.target.value;
+    handleSearchTermChange = (searchTerm) => {
+        console.log('on change', searchTerm);
         this.setState({searchTerm});
       }
     
     render() {
-        const { searchTerm } = this.props;
+        const { suggestionList } = this.props;
+        const { searchTerm } = this.state;
+        
+        const options = Object.keys(suggestionList).map(item => ({ value: item, label: item }));
         return (
-            <div>
-                Enter name: <input type="text" value={searchTerm} onChange={this.handleSearchTermChange} placeholder="Search"/>
-                <input type="submit" value="Submit" onClick={this.handleSearchTermSubmit}/>
-                {this.state.foundRoom && 
-                  <div>
-                    <div>
-                        {this.state.foundRoom}
-                    </div>
-                    <br/>
-                    <div>
-                        {this.state.foundArea}
-                    </div>
-                  </div>}
-            </div>
+          <Select 
+            value={searchTerm}
+            options={options}
+            styles={customStyles}
+            onChange={this.handleSearchTermChange}
+            onKeyDown={this.handleSearchTermSubmit}
+          />
         );
     }
 }
